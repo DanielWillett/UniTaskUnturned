@@ -1,3 +1,8 @@
+## Fork Info
+This is a fork of `UniTask` by Cysharp. It is built on Unity `v2020.3.38f1 LTS`, which is Unturned's version. It has support for Web Requests and Asset Bundles enabled.
+
+**To initialize, `PlayerLoopHelper.Init` must be called as early as possible.**
+
 UniTask
 ===
 [![GitHub Actions](https://github.com/Cysharp/UniTask/workflows/Build-Debug/badge.svg)](https://github.com/Cysharp/UniTask/actions) [![Releases](https://img.shields.io/github/release/Cysharp/UniTask.svg)](https://github.com/Cysharp/UniTask/releases)

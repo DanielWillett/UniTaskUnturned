@@ -1,7 +1,10 @@
+## Fork Info
+This is a fork of `UniTask` by Cysharp. It is built on Unity `v2020.3.38f1 LTS`, which is Unturned's version. It has support for Web Requests and Asset Bundles enabled.
+
+**To initialize, `PlayerLoopHelper.Init` must be called as early as possible.**
+
 UniTask
 ===
-[![GitHub Actions](https://github.com/Cysharp/UniTask/workflows/Build-Debug/badge.svg)](https://github.com/Cysharp/UniTask/actions) [![Releases](https://img.shields.io/github/release/Cysharp/UniTask.svg)](https://github.com/Cysharp/UniTask/releases) [![Readme_CN](https://img.shields.io/badge/UniTask-%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3-red)](https://github.com/Cysharp/UniTask/blob/master/README_CN.md)
-
 Provides an efficient allocation free async/await integration for Unity.
 
 * Struct based `UniTask<T>` and custom AsyncMethodBuilder to achieve zero allocation

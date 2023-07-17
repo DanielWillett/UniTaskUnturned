@@ -178,6 +178,7 @@ namespace Cysharp.Threading.Tasks
 
     public static class PlayerLoopHelper
     {
+        private static bool _hasInitialized;
         static readonly ContinuationQueue ThrowMarkerContinuationQueue = new ContinuationQueue(PlayerLoopTiming.Initialization);
         static readonly PlayerLoopRunner ThrowMarkerPlayerLoopRunner = new PlayerLoopRunner(PlayerLoopTiming.Initialization);
 
@@ -193,6 +194,7 @@ namespace Cysharp.Threading.Tasks
         static ContinuationQueue[] yielders;
         static PlayerLoopRunner[] runners;
         internal static bool IsEditorApplicationQuitting { get; private set; }
+        public static bool HasBeenInitialized => _hasInitialized;
         static PlayerLoopSystem[] InsertRunner(PlayerLoopSystem loopSystem,
             bool injectOnFirst,
             Type loopRunnerYieldType, ContinuationQueue cq,
@@ -285,9 +287,11 @@ namespace Cysharp.Threading.Tasks
             return dest.ToArray();
         }
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        static void Init()
+        
+        public static void Init()
         {
+            if (_hasInitialized) throw new InvalidOperationException("Already initialized.");
+            _hasInitialized = true;
             // capture default(unity) sync-context.
             unitySynchronizationContext = SynchronizationContext.Current;
             mainThreadId = Thread.CurrentThread.ManagedThreadId;
@@ -391,7 +395,7 @@ namespace Cysharp.Threading.Tasks
             }
         }
 
-        public static void Initialize(ref PlayerLoopSystem playerLoop, InjectPlayerLoopTimings injectTimings = InjectPlayerLoopTimings.All)
+        private static void Initialize(ref PlayerLoopSystem playerLoop, InjectPlayerLoopTimings injectTimings = InjectPlayerLoopTimings.All)
         {
 #if UNITY_2020_2_OR_NEWER
             yielders = new ContinuationQueue[16];
