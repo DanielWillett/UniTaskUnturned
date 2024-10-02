@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net461;net481</TargetFrameworks>
+        <TargetFrameworks>net461;net481;netstandard2.1</TargetFrameworks>
         <AssemblyName>UniTask</AssemblyName>
         <LangVersion>8.0</LangVersion>
         <RootNamespace>Cysharp.Threading.Tasks</RootNamespace>
@@ -24,11 +24,12 @@
         <PackageIcon>Icon.png</PackageIcon>
         <SignAssembly>true</SignAssembly>
         <IsPackable>true</IsPackable>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 
-        <!-- Unity v2020.3.38f1 LTS Defines  -->
+        <!-- Unity v2021.3.29f1 LTS Defines  -->
         <DefineConstants>
           UNITASK_WEBREQUEST_SUPPORT;UNITASK_ASSETBUNDLE_SUPPORT;
-          NETSTANDARD2_0;
+          NETSTANDARD2_0;NETSTANDARD2_1;
           UNITY_2021_3_29;UNITY_2021_3;UNITY_2021;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;
           UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;
           UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;
