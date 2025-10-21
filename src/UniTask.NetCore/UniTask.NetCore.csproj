@@ -1,13 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net461;net481;netstandard2.1</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
         <AssemblyName>UniTask</AssemblyName>
         <LangVersion>8.0</LangVersion>
         <RootNamespace>Cysharp.Threading.Tasks</RootNamespace>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <NoWarn>$(NoWarn);CS1591</NoWarn>
-        <Version>2.5.0</Version>
+	    <DefineConstants>UNITASK_NETCORE</DefineConstants>
+        <Version>2.5.10</Version>
+	</PropertyGroup>
+	<PropertyGroup>
 
         <!-- NuGet Packaging -->
         <Id>UniTask.Unturned</Id>
@@ -64,7 +67,7 @@
       <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
     </ItemGroup>
 
-    <ItemGroup Condition="'$(TargetFrameworkVersion)' == 'v4.6.1'">
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
       <PackageReference Include="System.ValueTuple" Version="4.5.0"/>
     </ItemGroup>
 

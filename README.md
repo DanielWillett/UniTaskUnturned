@@ -61,7 +61,7 @@ For advanced tips, see blog post: [Extends UnityWebRequest via async decorator p
 
 Getting started
 ---
-Install via [UPM package](#upm-package) or asset package(`UniTask.*.*.*.unitypackage`) available in [UniTask/releases](https://github.com/Cysharp/UniTask/releases) page.
+Install via [UPM package](#upm-package) with git reference or asset package(`UniTask.*.*.*.unitypackage`) available in [UniTask/releases](https://github.com/Cysharp/UniTask/releases).
 
 ```csharp
 // extension awaiter/methods can be used by this namespace
@@ -170,7 +170,7 @@ UniTask provides three pattern of extension methods.
 
 > Note: AssetBundleRequest has `asset` and `allAssets`, default await returns `asset`. If you want to get `allAssets`, you can use `AwaitForAllAssets()` method.
 
-The type of `UniTask` can use utilities like `UniTask.WhenAll`, `UniTask.WhenAny`. They are like `Task.WhenAll`/`Task.WhenAny` but the return type is more useful. They return value tuples so you can deconstruct each result and pass multiple types.
+The type of `UniTask` can use utilities like `UniTask.WhenAll`, `UniTask.WhenAny`, `UniTask.WhenEach`. They are like `Task.WhenAll`/`Task.WhenAny` but the return type is more useful. They return value tuples so you can deconstruct each result and pass multiple types.
 
 ```csharp
 public async UniTaskVoid LoadManyAsync()
@@ -536,6 +536,9 @@ It indicates when to run, you can check [PlayerLoopList.md](https://gist.github.
 
 In UniTask, await directly uses native timing, while `WithCancellation` and `ToUniTask` use specified timing. This is usually not a particular problem, but with `LoadSceneAsync`, it causes a different order of Start and continuation after await. So it is recommended not to use `LoadSceneAsync.ToUniTask`.
 
+> Note: When using Unity 2023.1 or newer, ensure you have `using UnityEngine;` in the using statements of your file when working with new `UnityEngine.Awaitable` methods like `SceneManager.LoadSceneAsync`. 
+> This prevents compilation errors by avoiding the use of the `UnityEngine.AsyncOperation` version.
+
 In the stacktrace, you can check where it is running in playerloop.
 
 ![image](https://user-images.githubusercontent.com/46207/83735571-83caea80-a68b-11ea-8d22-5e22864f0d24.png)
@@ -724,6 +727,19 @@ await UniTaskAsyncEnumerable.EveryUpdate().ForEachAsync(_ =>
 {
     Debug.Log("Update() " + Time.frameCount);
 }, token);
+```
+
+`UniTask.WhenEach` that is similar to .NET 9's `Task.WhenEach` can consume new way for await multiple tasks.
+
+```csharp
+await foreach (var result in UniTask.WhenEach(task1, task2, task3))
+{
+    // The result is of type WhenEachResult<T>.
+    // It contains either `T Result` or `Exception Exception`.
+    // You can check `IsCompletedSuccessfully` or `IsFaulted` to determine whether to access `.Result` or `.Exception`.
+    // If you want to throw an exception when `IsFaulted` and retrieve the result when successful, use `GetResult()`.
+    Debug.Log(result.GetResult());
+}
 ```
 
 UniTaskAsyncEnumerable implements asynchronous LINQ, similar to LINQ in `IEnumerable<T>` or Rx in `IObservable<T>`. All standard LINQ query operators can be applied to asynchronous streams. For example, the following code shows how to apply a Where filter to a button-click asynchronous stream that runs once every two clicks.
@@ -1036,6 +1052,7 @@ Use UniTask type.
 | `Task.Run` | `UniTask.RunOnThreadPool` |
 | `Task.WhenAll` | `UniTask.WhenAll` |
 | `Task.WhenAny` | `UniTask.WhenAny` |
+| `Task.WhenEach` | `UniTask.WhenEach` |
 | `Task.CompletedTask` | `UniTask.CompletedTask` |
 | `Task.FromException` | `UniTask.FromException` |
 | `Task.FromResult` | `UniTask.FromResult` |

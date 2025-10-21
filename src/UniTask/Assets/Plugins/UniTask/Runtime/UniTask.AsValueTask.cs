@@ -1,5 +1,11 @@
 ﻿#pragma warning disable 0649
 
+#if UNITASK_NETCORE || UNITY_2022_3_OR_NEWER
+#define SUPPORT_VALUETASK
+#endif
+
+#if SUPPORT_VALUETASK
+
 using System;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
@@ -10,7 +16,7 @@ namespace Cysharp.Threading.Tasks
     {
         public static ValueTask AsValueTask(this in UniTask task)
         {
-#if NETSTANDARD2_0
+#if (UNITASK_NETCORE && NETSTANDARD2_0)
             return new ValueTask(new UniTaskValueTaskSource(task), 0);
 #else
             return task;
@@ -19,7 +25,7 @@ namespace Cysharp.Threading.Tasks
 
         public static ValueTask<T> AsValueTask<T>(this in UniTask<T> task)
         {
-#if NETSTANDARD2_0
+#if (UNITASK_NETCORE && NETSTANDARD2_0)
             return new ValueTask<T>(new UniTaskValueTaskSource<T>(task), 0);
 #else
             return task;
@@ -36,7 +42,7 @@ namespace Cysharp.Threading.Tasks
             await task;
         }
 
-#if NETSTANDARD2_0
+#if (UNITASK_NETCORE && NETSTANDARD2_0)
 
         class UniTaskValueTaskSource : IValueTaskSource
         {
@@ -95,3 +101,4 @@ namespace Cysharp.Threading.Tasks
 #endif
     }
 }
+#endif
