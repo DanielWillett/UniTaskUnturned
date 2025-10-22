@@ -2,7 +2,7 @@
 #pragma warning disable CS0108
 
 #if (UNITASK_NETCORE && !NETSTANDARD2_0) || UNITY_2022_3_OR_NEWER
-#define SUPPORT_VALUETASK
+#define SUPPORT_VALUETASK 
 #endif
 
 using System;
@@ -34,7 +34,7 @@ namespace Cysharp.Threading.Tasks
 
         UniTaskStatus UnsafeGetStatus(); // only for debug use.
 
-#if SUPPORT_VALUETASK
+#if SUPPORT_VALUETASK && NETSTANDARD2_1_OR_GREATER
 
         System.Threading.Tasks.Sources.ValueTaskSourceStatus System.Threading.Tasks.Sources.IValueTaskSource.GetStatus(short token)
         {
