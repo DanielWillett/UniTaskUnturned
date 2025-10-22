@@ -1,5 +1,5 @@
 ## Fork Info
-This is a fork of `UniTask` by Cysharp. It is built on Unity `v2021.3.29f1 LTS`, which is Unturned's version. It has support for Web Requests and Asset Bundles enabled.
+This is a fork of `UniTask` by Cysharp. It is built on Unity `v2022.3.62f2 LTS`, which is Unturned's version. It has support for Web Requests and Asset Bundles enabled.
 
 **To initialize, `PlayerLoopHelper.Init` must be called as early as possible.**
 ```cs
